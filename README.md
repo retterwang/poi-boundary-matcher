@@ -194,11 +194,42 @@ pip install openpyxl
 - 减少保留的字段数量
 - 确保边界数据是 WKT 格式（避免实时转换）
 
+## 🧰 附带工具
+
+仓库还包含两个独立的小工具：
+
+### wkt_converter.py — WKT 边界格式双向转换
+
+WKT 格式与 `经度_纬度;经度_纬度;...` 边界坐标串的双向转换工具，纯 Python 实现，无外部依赖，支持 GUI 和命令行两种方式。
+
+```bash
+# 图形界面
+python wkt_converter.py gui
+
+# 命令行：boundaries 格式转 WKT
+python wkt_converter.py to-wkt input.csv -o output.csv
+```
+
+### GUIManager.py — 统一 Tkinter 生命周期管理
+
+单例模式的 GUI 管理工具，统一管理 Tk 实例生命周期，避免多工具重复创建 `Tk()` 导致的内存泄漏。提供文件选择、消息对话框等通用接口。
+
+```python
+from GUIManager import GUIManager
+
+gui = GUIManager()
+file_path = gui.select_file(title="选择文件")
+gui.show_info("处理完成！")
+gui.cleanup()
+```
+
 ## 📄 文件结构
 
 ```
 POI_Boundary_Matcher/
 ├── POI_Boundary_Matcher.py   # 主程序
+├── wkt_converter.py           # WKT <-> Boundaries 双向转换工具
+├── GUIManager.py              # 统一 Tkinter 生命周期管理工具
 ├── README.md                  # 项目说明（本文件）
 ├── README_EN.md               # English README
 ├── requirements.txt           # 依赖库列表
